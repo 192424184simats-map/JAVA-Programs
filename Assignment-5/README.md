@@ -3,29 +3,28 @@
 **Java:** OpenJDK 21 | **Database:** MariaDB / MySQL-compatible | **JDBC:** MariaDB Connector/J 2.7.6
 
 ## Contents
-- Part-A: persistence design, buffered I/O, DAO pattern, serialization and transaction/security pseudocode.
-- Task-B1: delimited bus-pass file store, damaged-line recovery, scan-vs-HashMap and I/O benchmark.
-- Task-B2: intentionally vulnerable SQL login demonstration versus PreparedStatement.
-- Task-B3: JDBC Statement, PreparedStatement and batch import comparison, including transaction rollback.
-- Task-B4: metadata inspection and validated migration of legacy records into a relational database.
-- sql/: schema and seed scripts. data/: small test input and benchmark CSVs. figures/: explanatory SVG charts/diagrams.
+- Part-A/: persistence design, buffered I/O, DAO pattern, serialization and transaction/security pseudocode.
+- Task-B1/: delimited bus-pass file store, damaged-line recovery and I/O benchmark.
+- Task-B2/: SQL injection demonstration versus PreparedStatement.
+- Task-B3/: JDBC Statement, PreparedStatement and batch import comparison, including transaction rollback.
+- Task-B4/: metadata inspection and validated migration of legacy records into a relational database.
+- sql/: schema and seed scripts.
+- data/: benchmark CSV files.
+- figures/: explanatory SVG diagrams and charts.
 
 ## Run (JDK 21)
-Compile each task separately:
+From this Assignment-5 folder:
 ```bash
 javac -d out Task-B1/*.java
 java -cp out PassStoreDemo
 java -cp out IoBenchmark
-javac -d out Task-B2/*.java
-java -cp out LoginDemo
 ```
-For JDBC tasks, install MariaDB/MySQL and MariaDB Connector/J 2.7.6. Run the SQL scripts in `sql/`, update credentials in `common/Db.java`, then compile with the driver jar:
+For JDBC tasks, install MariaDB/MySQL and MariaDB Connector/J 2.7.6. Run SQL scripts from `sql/`, update the database URL, username and password in the JDBC source files, then compile and run with the connector JAR. Example:
 ```bash
-javac -cp mariadb-java-client-2.7.6.jar -d out common/Db.java Task-B3/*.java
+javac -cp mariadb-java-client-2.7.6.jar -d out Task-B3/LoaderBenchmark.java
 java -cp out:mariadb-java-client-2.7.6.jar LoaderBenchmark
 ```
-On Windows use `; ` instead of `:` in the Java classpath.
-For Task-B4 compile `common/Db.java Task-B4/PassMigration.java` with the same connector jar and run with the source text file path.
+On Windows use `; ` instead of `:` in the Java classpath. For Task-B4 compile `Task-B4/PassMigration.java` with the connector JAR and pass the path to `Task-B4/migration-source.txt`.
 
-## Important honesty note
-The numerical benchmark tables in the report and the CSV files are transcribed from the supplied Assignment 5 PDF; they are reference/report measurements, not a fresh benchmark run on this machine. The source programs are runnable experiments. The PDF refers to screenshots in a shots folder, but those screenshot assets were not supplied separately, so this folder does not claim to contain original live screenshots. The SVGs are explanatory diagrams/charts made from the report values.
+## Evidence note
+Benchmark and migration numbers in report text and CSV files are transcribed from the supplied Assignment 5 PDF; they are reference measurements, not newly measured here. The Java files are runnable experiments. Original screenshot files mentioned in the PDF were not separately supplied, so the SVG files are explanatory diagrams/charts, not claimed live screenshots.
